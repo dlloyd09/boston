@@ -33,10 +33,20 @@ def main():
     print(f"r^2 value: {reg.score(pr_test, mhv_test)}")
 
     # and plot it out!
-    pyplot.scatter(mhv_test, mhv_pred, edgecolors = (0, 0, 0))
+    pyplot.scatter(mhv_test, mhv_pred)
     pyplot.xlabel("Actual listed value (in thousands)")
     pyplot.ylabel("Predicted value based on data (in thousands)")
-    pyplot.title("Predicted versus actual listed value")
+
+    # and see how far off we were as mean squared error
+    err = numpy.around(sklearn.metrics.mean_squared_error(mhv_test, mhv_pred), 3)
+    pyplot.title(f"Predicted versus actual listed value (MSE = {err})")
+
+    # determine the trendline
+    tr = numpy.polyfit(mhv_test, mhv_pred, 2)
+    trendline = numpy.poly1d(tr)
+
+    # plot the line, coloring it magenta
+    pyplot.plot(mhv_test, trendline(mhv_test), "m+")
     pyplot.show()
 
 if __name__ == "__main__":

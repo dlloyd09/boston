@@ -29,6 +29,14 @@ def main():
     reg.fit(pr_train, mhv_train)
     mhv_pred = reg.predict(pr_test)
 
+    # print out the table of coefficients to three decimal places
+    val = 1
+    for x in reg.coef_:
+        print(f"x{val}: {x:.3f}")
+        val += 1
+
+    print()
+
     # print out the r^2 value
     print(f"r^2 value: {reg.score(pr_test, mhv_test)}")
 
